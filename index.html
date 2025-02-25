@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editor HTML Personalizado</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .toolbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            border: 1px solid #ccc;
+            padding: 10px;
+            background-color: #f9f9f9;
+            margin-bottom: 10px;
+            z-index: 1000; /* Garante que a toolbar fica sobreposta ao conteúdo */
+        }
+        .toolbar button, .toolbar select {
+            margin-right: 5px;
+        }
+        #editor, .source-code {
+            border: 1px solid #ccc;
+            min-height: 300px;
+            padding: 10px;
+            background-color: #fff;
+            margin-top: 60px; /* Espaço para a toolbar fixa */
+        }
+        .source-code {
+            white-space: pre-wrap;
+            background-color: #f4f4f4;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="toolbar">
+        <button onclick="execCmd('bold')">N</button>
+        <button onclick="execCmd('italic')">I</button>
+        <button onclick="execCmd('underline')">S</button>
+        <button onclick="execCmd('subscript')">Sub</button>
+        <button onclick="execCmd('superscript')">Sup</button>
+        <button onclick="execCmd('insertUnorderedList')">UL</button>
+        <button onclick="execCmd('insertOrderedList')">OL</button>
+        <button onclick="execCmd('createLink')">Link</button>
+        <button onclick="execCmd('insertImage')">Img</button>
+        <select onchange="execCmdWithArg('formatBlock', this.value)">
+            <option value="">Tipos de Texto</option>
+            <option value="h1">T1</option>
+            <option value="h2">T2</option>
+            <option value="h3">T3</option>
+            <option value="h4">T4</option>
+            <option value="p">Parágrafo</option>
+        </select>
+        <button onclick="execCmd('insertHTML', '<video controls src=\'URL\'>Seu navegador não suporta o elemento <code>video</code>.</video>')">Vid</button>
+        <input type="color" onchange="execCmdWithArg('foreColor', this.value)">
+        <button onclick="toggleSource()">Ver HTML</button>
+    </div>
+    <form id="formSalvarConteudo">
+        <div id="editor" contenteditable="true">
+            <p>Edite este conteúdo...</p>
+        </div>
+        <textarea class="source-code" id="sourceCode"></textarea>
+    </form>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const editor = document.getElementById('editor');
+            const sourceCode = document.getElementById('sourceCode');
+            let isSourceVisible = false;
+
+            function execCmd(command) {
+                if (command === 'createLink' || command === 'insertImage') {
+                    const url = prompt("Insira o URL:");
+                    document.execCommand(command, false, url);
+                } else {
+                    document.execCommand(command, false, null);
+                }
+            }
+
+            function execCmdWithArg(command, arg) {
+                document.execCommand(command, false, arg);
+            }
+
+            function toggleSource() {
+                if (isSourceVisible) {
+                    editor.innerHTML = sourceCode.value;
+                    sourceCode.style.display = "none";
+                    editor.style.display = "block";
+                } else {
+                    sourceCode.value = formatHTML(editor.innerHTML);
+                    sourceCode.style.display = "block";
+                    sourceCode.style.width = editor.offsetWidth + "px"; // Ajusta a largura da textarea para coincidir com o editor
+                    editor.style.display = "none";
+                }
+                isSourceVisible = !isSourceVisible;
+            }
+
+            function formatHTML(html) {
+                const formattedHTML = html.replace(/></g, ">\n<");
+                return formattedHTML;
+            }
+
+            window.execCmd = execCmd;
+            window.execCmdWithArg = execCmdWithArg;
+            window.toggleSource = toggleSource;
+            window.formatHTML = formatHTML;
+        });
+    </script>
+</body>
+</html>
