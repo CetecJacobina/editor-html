@@ -14,13 +14,13 @@ body {
     z-index: 1000;
 }
 
-.toolbar button, .toolbar select {
+.toolbar button,
+.toolbar select {
     margin-right: 5px;
 }
 
 #editor {
-    border: 1px solid #ccc;
-    min-height: 300px;
+    min-height: 90vh; /* Definir a altura em 90vh */
     padding: 10px;
     background-color: #fff;
     margin-top: 60px;
@@ -28,8 +28,14 @@ body {
 
 #sourceCodeEditor {
     border: 1px solid #ccc;
-    min-height: 300px;
+    min-height: 85vh;
     background-color: #272822;
     color: #f8f8f2;
     display: none;
+}
+
+.CodeMirror {
+    border: 1px solid #ccc;
+    min-height: 85vh; /* Definir a altura em 85vh */
+    margin-top: 60px;
 }

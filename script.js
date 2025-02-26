@@ -8,8 +8,9 @@ document.addEventListener('DOMContentLoaded', function () {
         lineWrapping: true,
         showInvisibles: true
     });
-    
-    // Define a altura do editor em 90vh usando JavaScript
+
+    // Define a altura do editor principal e do CodeMirror em 90vh usando JavaScript
+    editor.style.minHeight = '90vh';
     sourceCodeEditor.setSize(null, '90vh');
 
     let isSourceVisible = false;
