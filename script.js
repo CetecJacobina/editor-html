@@ -9,7 +9,6 @@ document.addEventListener('DOMContentLoaded', function () {
         showInvisibles: true
     });
 
-    // Define a altura do editor principal e do CodeMirror em 90vh usando JavaScript
     editor.style.minHeight = '90vh';
     sourceCodeEditor.setSize(null, '90vh');
 
@@ -19,6 +18,9 @@ document.addEventListener('DOMContentLoaded', function () {
         if (command === 'createLink' || command === 'insertImage') {
             const url = prompt("Insira o URL:");
             document.execCommand(command, false, url);
+        } else if (command === 'insertUnorderedList') {
+            const listHTML = `<ul class="tick"><li></li></ul>`;
+            document.execCommand('insertHTML', false, listHTML);
         } else {
             document.execCommand(command, false, null);
         }
@@ -26,6 +28,42 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function execCmdWithArg(command, arg) {
         document.execCommand(command, false, arg);
+    }
+
+    function insertImageLink() {
+        const imageUrl = prompt("Insira o URL da imagem:");
+        if (imageUrl) {
+            const imgHTML = `<img src="${imageUrl}" alt="Imagem">`;
+            document.execCommand('insertHTML', false, imgHTML);
+        }
+    }
+
+    function floatImage(direction) {
+        const img = getSelectedImage();
+        if (img) {
+            img.style.float = direction;
+        }
+    }
+
+    function resizeImage(sizeClass) {
+        const img = getSelectedImage();
+        if (img) {
+            img.className = sizeClass;
+        }
+    }
+
+    function getSelectedImage() {
+        const selection = window.getSelection();
+        if (selection.rangeCount > 0) {
+            const range = selection.getRangeAt(0);
+            const container = range.startContainer;
+            if (container.nodeType === Node.ELEMENT_NODE && container.tagName === 'IMG') {
+                return container;
+            } else if (container.parentNode && container.parentNode.tagName === 'IMG') {
+                return container.parentNode;
+            }
+        }
+        return null;
     }
 
     function insertVideo() {
@@ -83,6 +121,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
     window.execCmd = execCmd;
     window.execCmdWithArg = execCmdWithArg;
+    window.insertImageLink = insertImageLink;
+    window.floatImage = floatImage;
+    window.resizeImage = resizeImage;
     window.insertVideo = insertVideo;
     window.toggleSource = toggleSource;
     window.formatHTML = formatHTML;

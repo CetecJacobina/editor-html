@@ -15,8 +15,49 @@ body {
 }
 
 .toolbar button,
-.toolbar select {
+.toolbar select,
+.toolbar .dropdown {
     margin-right: 5px;
+}
+
+.toolbar .dropdown {
+    display: inline-block;
+    position: relative;
+
+}
+
+.toolbar .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+
+}
+
+.toolbar .dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+
+}
+
+.toolbar .dropdown-content a:hover {
+    background-color: #f1f1f1;
+
+}
+
+.toolbar .dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.toolbar .dropdown:hover .dropbtn {
+    background-color: #3e678e;
+    transition: 0.5s;
+    color: white;
+
 }
 
 #editor {

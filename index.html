@@ -38,8 +38,17 @@
         <button onclick="execCmd('insertUnorderedList')">UL</button>
         <button onclick="execCmd('insertOrderedList')">OL</button>
         <button onclick="execCmd('createLink')">Link</button>
-        <button onclick="execCmd('insertImage')">Img</button>
-
+        <div class="dropdown">
+            <button class="dropbtn">Img</button>
+            <div class="dropdown-content">
+                <a href="#" onclick="insertImageLink()">Link</a>
+                <a href="#" onclick="floatImage('right')">Float Right</a>
+                <a href="#" onclick="floatImage('left')">Float Left</a>
+                <a href="#" onclick="resizeImage('img-peq')">Pequeno</a>
+                <a href="#" onclick="resizeImage('img-med')">Médio</a>
+                <a href="#" onclick="resizeImage('img-gra')">Grande</a>
+            </div>
+        </div>
         <button onclick="insertVideo()">Vid</button>
         <input type="color" onchange="execCmdWithArg('foreColor', this.value)">
         <button onclick="toggleSource()">&#60;&#62;</button>
