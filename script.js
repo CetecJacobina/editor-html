@@ -5,9 +5,13 @@ document.addEventListener('DOMContentLoaded', function () {
         theme: "monokai",
         lineNumbers: true,
         autoCloseTags: true,
-        lineWrapping: true,  // Adicione essa linha para permitir a quebra de linha
-        showInvisibles: true // Adicione essa linha para exibir caracteres invisíveis
+        lineWrapping: true,
+        showInvisibles: true
     });
+    
+    // Define a altura do editor em 90vh usando JavaScript
+    sourceCodeEditor.setSize(null, '90vh');
+
     let isSourceVisible = false;
 
     function execCmd(command) {
@@ -21,6 +25,14 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function execCmdWithArg(command, arg) {
         document.execCommand(command, false, arg);
+    }
+
+    function insertVideo() {
+        const videoURL = prompt("Insira o URL de incorporação do vídeo:");
+        if (videoURL) {
+            const videoHTML = `<div class="video-container">${videoURL}</div>`;
+            document.execCommand('insertHTML', false, videoHTML);
+        }
     }
 
     function toggleSource() {
@@ -70,6 +82,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     window.execCmd = execCmd;
     window.execCmdWithArg = execCmdWithArg;
+    window.insertVideo = insertVideo;
     window.toggleSource = toggleSource;
     window.formatHTML = formatHTML;
     window.saveAsHTML = saveAsHTML;

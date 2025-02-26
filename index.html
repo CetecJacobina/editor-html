@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,6 +9,7 @@
         body {
             font-family: Arial, sans-serif;
         }
+
         .toolbar {
             position: fixed;
             top: 0;
@@ -19,45 +21,64 @@
             margin-bottom: 10px;
             z-index: 1000;
         }
-        .toolbar button, .toolbar select {
+
+        .toolbar button,
+        .toolbar select {
             margin-right: 5px;
+
         }
+
         #editor {
             border: 1px solid #ccc;
             min-height: 300px;
+            height: 80vh;
             padding: 10px;
             background-color: #fff;
             margin-top: 60px;
         }
+
         .CodeMirror {
             border: 1px solid #ccc;
-            min-height: 300px;
+            height: 600px;
+            /* Definir a altura em 90vh */
             margin-top: 60px;
         }
     </style>
+    <link rel="stylesheet" href="style.css">
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/codemirror.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/theme/monokai.min.css">
 </head>
+
 <body>
     <div class="toolbar">
+        <select onchange="execCmdWithArg('formatBlock', this.value)">
+            <option value=""> Texto</option>
+            <option value="h1">
+                <h1>Título 1</h1>
+            </option>
+            <option value="h2">
+                <h2>Título 2</h2>
+            </option>
+            <option value="h3">
+                <h3>Título 3</h3>
+            </option>
+            <option value="h4">
+                <h4>Título 4</h4>
+            </option>
+            <option value="p">Parágrafo</option>
+        </select>
         <button onclick="execCmd('bold')">N</button>
         <button onclick="execCmd('italic')">I</button>
         <button onclick="execCmd('underline')">S</button>
         <button onclick="execCmd('subscript')">Sub</button>
-        <button onclick="execCmd('superscript')">Sup</button>
+        <button onclick="execCmd('superscript')"><small>Sup</small></button>
         <button onclick="execCmd('insertUnorderedList')">UL</button>
         <button onclick="execCmd('insertOrderedList')">OL</button>
         <button onclick="execCmd('createLink')">Link</button>
         <button onclick="execCmd('insertImage')">Img</button>
-        <select onchange="execCmdWithArg('formatBlock', this.value)">
-            <option value="">Tipos de Texto</option>
-            <option value="h1">T1</option>
-            <option value="h2">T2</option>
-            <option value="h3">T3</option>
-            <option value="h4">T4</option>
-            <option value="p">Parágrafo</option>
-        </select>
-        <button onclick="execCmd('insertHTML', '<video controls src=\'URL\'>Seu navegador não suporta o elemento <code>video</code>.</video>')">Vid</button>
+
+        <button onclick="insertVideo()">Vid</button>
         <input type="color" onchange="execCmdWithArg('foreColor', this.value)">
         <button onclick="toggleSource()">&#60;&#62;</button>
         <button onclick="saveAsHTML()">Salvar</button>
@@ -76,4 +97,5 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/js-beautify/1.14.0/beautify-html.min.js"></script>
     <script src="script.js"></script>
 </body>
+
 </html>
