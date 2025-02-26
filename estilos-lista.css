@@ -1,0 +1,47 @@
+<style>
+
+/* styles.css */
+ul.list-none {
+    list-style: none;
+}
+
+ul.list-disc {
+    list-style: disc;
+}
+
+ul.list-tick {
+    list-style: url('tick.png'); /* Certifique-se de ter uma imagem tick.png no seu diretório de imagens */
+}
+
+ol.list-decimal {
+    list-style: decimal;
+}
+
+ol.list-decimal-dash {
+    list-style: decimal-leading-zero;
+}
+
+ol.list-alpha-lower {
+    list-style: lower-alpha;
+}
+
+ol.list-alpha-upper {
+    list-style: upper-alpha;
+}
+
+ol.list-alpha-lower-dash {
+    list-style: lower-alpha;
+}
+
+ol.list-alpha-upper-dash {
+    list-style: upper-alpha;
+}
+
+ol.list-alpha-lower-parenthesis {
+    list-style: lower-alpha;
+}
+
+ol.list-alpha-upper-parenthesis {
+    list-style: upper-alpha;
+}
+</style>

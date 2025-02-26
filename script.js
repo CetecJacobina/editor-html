@@ -18,16 +18,34 @@ document.addEventListener('DOMContentLoaded', function () {
         if (command === 'createLink' || command === 'insertImage') {
             const url = prompt("Insira o URL:");
             document.execCommand(command, false, url);
-        } else if (command === 'insertUnorderedList') {
-            const listHTML = `<ul class="tick"><li></li></ul>`;
-            document.execCommand('insertHTML', false, listHTML);
         } else {
             document.execCommand(command, false, null);
         }
     }
 
     function execCmdWithArg(command, arg) {
-        document.execCommand(command, false, arg);
+        const selection = window.getSelection();
+        const range = selection.getRangeAt(0);
+        const content = range.extractContents();
+        const wrapper = document.createElement(command === 'insertUnorderedList' ? 'ul' : 'ol');
+        wrapper.className = arg;
+
+        if (content.childNodes.length > 0) {
+            Array.from(content.childNodes).forEach(node => {
+                const li = document.createElement('li');
+                while (node.firstChild) {
+                    li.appendChild(node.firstChild);
+                }
+                wrapper.appendChild(li);
+            });
+        } else {
+            const li = document.createElement('li');
+            li.appendChild(document.createTextNode('Novo item'));
+            wrapper.appendChild(li);
+        }
+
+        range.deleteContents();
+        range.insertNode(wrapper);
     }
 
     function insertImageLink() {

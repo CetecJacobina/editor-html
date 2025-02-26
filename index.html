@@ -35,8 +35,27 @@
         <button onclick="execCmd('underline')">S</button>
         <button onclick="execCmd('subscript')">Sub</button>
         <button onclick="execCmd('superscript')"><small>Sup</small></button>
-        <button onclick="execCmd('insertUnorderedList')">UL</button>
-        <button onclick="execCmd('insertOrderedList')">OL</button>
+        <div class="dropdown">
+            <button class="dropbtn">UL</button>
+            <div class="dropdown-content">
+                <a href="#" onclick="execCmdWithArg('insertUnorderedList', 'list-none')">None</a>
+                <a href="#" onclick="execCmdWithArg('insertUnorderedList', 'list-disc')">Disc</a>
+                <a href="#" onclick="execCmdWithArg('insertUnorderedList', 'tick')">Tick</a>
+            </div>
+        </div>
+        <div class="dropdown">
+            <button class="dropbtn">OL</button>
+            <div class="dropdown-content">
+                <a href="#" onclick="execCmdWithArg('insertOrderedList', 'list-decimal')">1.</a>
+                <a href="#" onclick="execCmdWithArg('insertOrderedList', 'list-decimal-dash')">1-</a>
+                <a href="#" onclick="execCmdWithArg('insertOrderedList', 'list-alpha-lower')">a.</a>
+                <a href="#" onclick="execCmdWithArg('insertOrderedList', 'list-alpha-upper')">A.</a>
+                <a href="#" onclick="execCmdWithArg('insertOrderedList', 'list-alpha-lower-dash')">a-</a>
+                <a href="#" onclick="execCmdWithArg('insertOrderedList', 'list-alpha-upper-dash')">A-</a>
+                <a href="#" onclick="execCmdWithArg('insertOrderedList', 'list-alpha-lower-parenthesis')">a)</a>
+                <a href="#" onclick="execCmdWithArg('insertOrderedList', 'list-alpha-upper-parenthesis')">A)</a>
+            </div>
+        </div>
         <button onclick="execCmd('createLink')">Link</button>
         <div class="dropdown">
             <button class="dropbtn">Img</button>
