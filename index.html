@@ -17,24 +17,26 @@
             padding: 10px;
             background-color: #f9f9f9;
             margin-bottom: 10px;
-            z-index: 1000; /* Garante que a toolbar fica sobreposta ao conteúdo */
+            z-index: 1000;
         }
         .toolbar button, .toolbar select {
             margin-right: 5px;
         }
-        #editor, .source-code {
+        #editor {
             border: 1px solid #ccc;
             min-height: 300px;
             padding: 10px;
             background-color: #fff;
-            margin-top: 60px; /* Espaço para a toolbar fixa */
+            margin-top: 60px;
         }
-        .source-code {
-            white-space: pre-wrap;
-            background-color: #f4f4f4;
-            display: none;
+        .CodeMirror {
+            border: 1px solid #ccc;
+            min-height: 300px;
+            margin-top: 60px;
         }
     </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/codemirror.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/theme/monokai.min.css">
 </head>
 <body>
     <div class="toolbar">
@@ -57,57 +59,21 @@
         </select>
         <button onclick="execCmd('insertHTML', '<video controls src=\'URL\'>Seu navegador não suporta o elemento <code>video</code>.</video>')">Vid</button>
         <input type="color" onchange="execCmdWithArg('foreColor', this.value)">
-        <button onclick="toggleSource()">Ver HTML</button>
+        <button onclick="toggleSource()">&#60;&#62;</button>
+        <button onclick="saveAsHTML()">Salvar</button>
     </div>
     <form id="formSalvarConteudo">
         <div id="editor" contenteditable="true">
             <p>Edite este conteúdo...</p>
         </div>
-        <textarea class="source-code" id="sourceCode"></textarea>
+        <!-- Adiciona um contêiner para o editor CodeMirror -->
+        <div id="sourceCodeEditor"></div>
     </form>
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const editor = document.getElementById('editor');
-            const sourceCode = document.getElementById('sourceCode');
-            let isSourceVisible = false;
-
-            function execCmd(command) {
-                if (command === 'createLink' || command === 'insertImage') {
-                    const url = prompt("Insira o URL:");
-                    document.execCommand(command, false, url);
-                } else {
-                    document.execCommand(command, false, null);
-                }
-            }
-
-            function execCmdWithArg(command, arg) {
-                document.execCommand(command, false, arg);
-            }
-
-            function toggleSource() {
-                if (isSourceVisible) {
-                    editor.innerHTML = sourceCode.value;
-                    sourceCode.style.display = "none";
-                    editor.style.display = "block";
-                } else {
-                    sourceCode.value = formatHTML(editor.innerHTML);
-                    sourceCode.style.display = "block";
-                    sourceCode.style.width = editor.offsetWidth + "px"; // Ajusta a largura da textarea para coincidir com o editor
-                    editor.style.display = "none";
-                }
-                isSourceVisible = !isSourceVisible;
-            }
-
-            function formatHTML(html) {
-                const formattedHTML = html.replace(/></g, ">\n<");
-                return formattedHTML;
-            }
-
-            window.execCmd = execCmd;
-            window.execCmdWithArg = execCmdWithArg;
-            window.toggleSource = toggleSource;
-            window.formatHTML = formatHTML;
-        });
-    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/mode/xml/xml.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/mode/htmlmixed/htmlmixed.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/addon/edit/closetag.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/js-beautify/1.14.0/beautify-html.min.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
